@@ -2734,6 +2734,8 @@ normal_boot:
 				#endif
 				}
 			}
+			dprintf(ALWAYS,"5 sec delay\n");
+			mdelay(5000);
 			boot_linux_from_mmc();
 		}
 		else
