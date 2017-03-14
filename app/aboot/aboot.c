@@ -2952,27 +2952,9 @@ void aboot_init(const struct app_descriptor *app)
 	if (is_user_force_reset())
 		goto normal_boot;
 
-	/* Check if we should do something other than booting up */
-	if (keys_get_state(KEY_VOLUMEUP) && keys_get_state(KEY_VOLUMEDOWN))
-	{
-		dprintf(ALWAYS,"dload mode key sequence detected\n");
-		if (set_download_mode(EMERGENCY_DLOAD))
-		{
-			dprintf(CRITICAL,"dload mode not supported by target\n");
-		}
-		else
-		{
-			reboot_device(DLOAD);
-			dprintf(CRITICAL,"Failed to reboot into dload mode\n");
-		}
-		boot_into_fastboot = true;
-	}
 	if (!boot_into_fastboot)
 	{
-		if (keys_get_state(KEY_HOME) || keys_get_state(KEY_VOLUMEUP))
-			boot_into_recovery = 1;
-		if (!boot_into_recovery &&
-			(keys_get_state(KEY_BACK) || keys_get_state(KEY_VOLUMEDOWN)))
+		if (!boot_into_recovery && (keys_get_state(KEY_BACK) ))
 			boot_into_fastboot = true;
 	}
 	#if NO_KEYPAD_DRIVER
